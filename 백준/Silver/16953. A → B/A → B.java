@@ -28,7 +28,6 @@ public class Main {
             if (temp.charAt(temp.length()-1) == '1') {
                 temp = temp.substring(0, temp.length()- 1);
                 mod(a, Integer.parseInt(temp), count+1);
-
             } else {
                 System.out.println("-1");
             }
