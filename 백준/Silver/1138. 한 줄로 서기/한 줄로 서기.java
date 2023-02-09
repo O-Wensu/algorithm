@@ -29,11 +29,11 @@ public class Main {
             }
             line[pos] = i + 1;
         }
-        String str = Arrays.stream(line)
-                .mapToObj(String::valueOf)
-                .reduce((x,y) -> x + " " + y)
-                .get();
-        System.out.print(str);
+        StringBuilder sb = new StringBuilder();
+        for (int i: line) {
+            sb.append(i).append(" ");
+        }
+        System.out.println(sb);
     }
 
     public static int findIndex(int[] arr, int key) {
