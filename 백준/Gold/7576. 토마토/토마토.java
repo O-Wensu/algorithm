@@ -25,13 +25,10 @@ public class Main {
     static int[][] graph;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-    static int answer = 0;
-    static Queue<Node> q1 = new LinkedList<>();
-
-    static boolean bfs() {
-        Queue<Node> q2 = new LinkedList<>();
-        while (!q1.isEmpty()) {
-            Node node = q1.poll();
+    static Queue<Node> q = new LinkedList<>();
+    static int bfs() {
+        while (!q.isEmpty()) {
+            Node node = q.poll();
             int x = node.getX();
             int y = node.getY();
 
@@ -40,30 +37,27 @@ public class Main {
                 int ny = y + dy[i];
                 if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
                 if (graph[nx][ny] != 0) continue;
-                graph[nx][ny] = 1;
-                q2.offer(new Node(nx, ny));
-            }
-            if (q1.isEmpty()) {
-                answer++;
-                for (Node data : q2) {
-                    q1.offer(data);
-                }
-                q2.clear();
+                graph[nx][ny] = graph[x][y] + 1;
+                q.offer(new Node(nx, ny));
             }
         }
-        int zeroCnt = (int) Arrays.stream(graph)
-                .flatMapToInt(Arrays::stream)
-                .filter(it -> it == 0)
-                .count();
-        if (zeroCnt > 0) return false;
-        return true;
+
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (graph[i][j] == 0) return -1;
+                result = Math.max(result, graph[i][j]);
+            }
+        }
+        return result - 1;
     }
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tk = new StringTokenizer(br.readLine());
-        m = Integer.parseInt(tk.nextToken()); //열
-        n = Integer.parseInt(tk.nextToken()); //행
+        m = Integer.parseInt(tk.nextToken());
+        n = Integer.parseInt(tk.nextToken());
         graph = new int[n][m];
 
         for (int i = 0; i < n; i++) {
@@ -71,14 +65,9 @@ public class Main {
             for (int j = 0; j < m; j++) {
                 int a = Integer.parseInt(tk.nextToken());
                 graph[i][j] = a;
-                if (a == 1) q1.offer(new Node(i, j));
+                if (a == 1) q.offer(new Node(i, j));
             }
         }
-
-        if (bfs()) {
-            System.out.println(answer - 1);
-        } else {
-            System.out.println("-1");
-        }
+        System.out.println(bfs());
     }
 }
