@@ -5,23 +5,24 @@ public class Main {
 
     public static int n;
     public static int[][] graph;
+    public static int[] dx = {-1, 1, 0, 0};
+    public static int[] dy = {0, 0, -1, 1};
     public static int count = 0;
 
-    public static boolean bfs(int x, int y) {
+    public static void dfs(int x, int y) {
         if (x <= -1 || x >= n || y <= -1 || y >= n) {
-            return false;
+            return;
         }
         if (graph[x][y] == 1) {
             graph[x][y] = 0;
 
-            bfs(x-1, y);
-            bfs(x+1, y);
-            bfs(x,y-1);
-            bfs(x, y+1);
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                dfs(nx, ny);
+            }
             count++;
-            return true;
         }
-        return false;
     }
 
     public static void main(String[] args) throws IOException {
@@ -32,21 +33,22 @@ public class Main {
         graph = new int[n][n];
 
         for (int i = 0; i < n; i++) {
-            String[] split = br.readLine().split("");
+            char[] chars = br.readLine().toCharArray();
             for (int j = 0; j < n; j++) {
-                graph[i][j] = Integer.parseInt(split[j]);
+                graph[i][j] = chars[j] - '0';
             }
         }
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (bfs(i, j)) {
+                dfs(i,j);
+                if (count != 0) {
                     results.add(count);
                     count = 0;
                 }
             }
         }
-        results.sort(Comparator.comparingInt(Integer::intValue));
+        Collections.sort(results);
         bw.write(results.size() + "\n");
         for (Integer result : results) {
             bw.write(result + "\n");
