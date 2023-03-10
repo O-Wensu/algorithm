@@ -7,16 +7,15 @@ public class Main {
         StringTokenizer token = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(token.nextToken());
         int k = Integer.parseInt(token.nextToken());
-        List<Integer> list = new ArrayList<>();
+        Integer[] arr = new Integer[n];
 
         for (int i = 0; i < n; i++) {
-            list.add(Integer.parseInt(br.readLine()));
+            arr[i] = Integer.parseInt(br.readLine());
         }
-
-        list.sort(Collections.reverseOrder());
+        Arrays.sort(arr, Collections.reverseOrder());
 
         int count = 0;
-        for (Integer i: list) {
+        for (Integer i: arr) {
             count += k / i;
             k %= i;
         }
