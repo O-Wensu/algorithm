@@ -1,0 +1,33 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static int[] dp;
+    static int[] scores;
+
+    static int stair(int x) {
+        if (x <= 0) {
+            return 0;
+        }
+        if (dp[x] == 0) {
+            dp[x] = Math.max(stair(x - 3) + scores[x - 1], stair(x - 2)) + scores[x];
+        }
+        return dp[x];
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int size = Integer.parseInt(br.readLine());
+        dp = new int[size + 1];
+        scores = new int[size + 1];
+
+        for (int i = 1; i < size + 1; i++) {
+            scores[i] = Integer.parseInt(br.readLine());
+        }
+        dp[1] = scores[1];
+        if (size > 1) {
+            dp[2] = scores[1] + scores[2];
+        }
+        System.out.println(stair(size));
+    }
+}
