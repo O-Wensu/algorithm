@@ -24,7 +24,7 @@ public class Main {
         int size = Integer.parseInt(br.readLine());
 
         dp[1] = dp[2] = dp[3] = 1L;
-        dp[4] = dp[5] = 2L;
+        dp[4] = 2L;
 
         for (int i = 0; i < size; i++) {
             int x = Integer.parseInt(br.readLine());
