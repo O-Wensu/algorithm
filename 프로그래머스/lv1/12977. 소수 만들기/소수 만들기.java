@@ -21,7 +21,7 @@ class Solution {
         return count;
     }
     
-    public static void dfs(int[] nums, int depth, int start) {
+    public void dfs(int[] nums, int depth, int start) {
         if (depth == SIZE) {
             int sum = 0;
             for (int num : arr) {
@@ -41,7 +41,7 @@ class Solution {
         }
     }
     
-    public static void getPrime(int max) {
+    public void getPrime(int max) {
         noPrime = new boolean[max + 1];
         noPrime[0] = true;
         noPrime[1] = true;
