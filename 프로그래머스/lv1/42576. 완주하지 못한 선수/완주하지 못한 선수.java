@@ -11,6 +11,7 @@ class Solution {
                 return participant[i];
             }
         }
-        return participant[participant.length - 1];
+        int len = participant.length;
+        return participant[len - 1];
     }
 }
