@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static int n, m;
-    public static boolean[] isUsed;
     public static int[] numbers;
     public static int[] arr;
     public static List<String> answer = new ArrayList<>();
@@ -20,7 +19,6 @@ public class Main {
             answer.add(str);
             return;
         }
-
         for (int i = start; i < numbers.length; i++) {
             arr[depth] = numbers[i];
             dfs(depth + 1, i + 1);
@@ -32,7 +30,6 @@ public class Main {
         StringTokenizer tk = new StringTokenizer(br.readLine());
         n = Integer.parseInt(tk.nextToken());
         m = Integer.parseInt(tk.nextToken());
-        isUsed = new boolean[n];
         numbers = new int[n];
         arr = new int[m];
 
