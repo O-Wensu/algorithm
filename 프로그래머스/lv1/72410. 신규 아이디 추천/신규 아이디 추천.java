@@ -1,90 +1,72 @@
 class Solution {
-    public String solution(String new_id) {
-        char[] chars = new_id.toCharArray();
-        String update_id = "";
-        for (int i = 0; i < chars.length; i++) {
-            char temp = chars[i];
-            //1단계
-            if (Character.isUpperCase(chars[i])) {
-                temp = Character.toLowerCase(chars[i]);
+    
+    public static class Id {
+        private String id;
+        private final int MAX_LENGTH = 15;
+        private final int MIN_LENGTH = 3;
+
+        public Id(String id) {
+            this.id = id;
+        }
+
+        public Id toLowerCase() {
+            id = id.toLowerCase();
+            return this;
+        }
+
+        public Id removeSpecialChar() {
+            id = id.replaceAll("[^-_.0-9a-z]", "");
+            return this;
+        }
+
+        public Id removeContinuousDot() {
+            id = id.replaceAll("[.]{2,}", ".");
+            return this;
+        }
+
+        public Id removeStartOrEndDot() {
+            if (id.startsWith(".")) id = id.substring(1);
+            if (id.endsWith(".")) id = id.substring(0, id.length() - 1);
+            return this;
+        }
+
+        public Id isEmpty() {
+            if (id.length() == 0) id = "a";
+            return this;
+        }
+
+        public Id moreThanMaxLength() {
+            if (id.length() > MAX_LENGTH){
+                id = id.substring(0, MAX_LENGTH);
+                if (id.endsWith(".")) id = id.substring(0, id.length() - 1);
             }
-            //2단계
-            if (canUse(temp)) {
-                update_id += temp;
+            return this;
+        }
+
+        public Id lessThanMinLength() {
+            if (id.length() < MIN_LENGTH) {
+                String last = id.substring(id.length() - 1);
+                while (id.length() < MIN_LENGTH) {
+                    id += last;
+                }
             }
-        }
-        //3단계
-        update_id = removeContinuousPeriod(update_id);
-
-        //4단계
-        update_id = removeStartOrEndPeriod(update_id);
-
-        //5단계
-        if (update_id.length() == 0) {
-            return "aaa";
+            return this;
         }
 
-        //6단계
-        update_id = removeOverLength(update_id);
-
-        //7단계
-        if (update_id.length() <= 2) {
-            update_id = addLastWord(update_id);
+        public String getId() {
+            return id;
         }
-
-        return update_id;
     }
     
-    //사용 가능한 문자인지 판단
-    public boolean canUse(char c) {
-        if (Character.isAlphabetic(c) || c == '-' || c == '_' || c == '.' || 0 <= c - '0' && c - '0' <= 9) {
-            return true;
-        }
-        return false;
-    }
-
-    //연속되는 마침표 제거
-    public String removeContinuousPeriod(String id) {
-        char[] idChars = id.toCharArray();
-        String update_id = "";
-        boolean prevPeriod = false;
-        for (char c : idChars) {
-            if (c == '.') {
-                if (!prevPeriod) {
-                    prevPeriod = true;
-                    update_id += c;
-                }
-                continue;
-            }
-            prevPeriod = false;
-            update_id += c;
-        }
-        return update_id;
-    }
-
-    //처음과 끝 마침표 제거
-    public String removeStartOrEndPeriod(String id) {
-        if (id.startsWith(".")) {
-            id = id.substring(1);
-        }
-        if (id.endsWith(".")) {
-            id = id.substring(0, id.length() - 1);
-        }
-        return id;
-    }
-
-    public String removeOverLength(String id) {
-        if (id.length() >= 16) {
-            id = id.substring(0, 15);
-        }
-        return removeStartOrEndPeriod(id);
-    }
-
-    public String addLastWord(String id) {
-        String last = id.substring(id.length() - 1);
-        while (id.length() != 3) {
-            id += last;
-        }
-        return id;
+    public String solution(String new_id) {
+        return new Id(new_id)
+                .toLowerCase()
+                .removeSpecialChar()
+                .removeContinuousDot()
+                .removeStartOrEndDot()
+                .isEmpty()
+                .moreThanMaxLength()
+                .lessThanMinLength()
+                .getId();
     }
 }
