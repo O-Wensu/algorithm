@@ -7,21 +7,23 @@ public class Main {
     public static int n, m;
     public static int[] numbers;
     public static int[] arr;
-    public static List<String> answer = new ArrayList<>();
     public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void dfs(int depth, int start) throws IOException{
         if (depth == m) {
-            String str = "";
             for (int i : arr) {
-                str += i + " ";
+                bw.write(i + " ");
             }
-            answer.add(str);
+            bw.write("\n");
             return;
         }
+        int prev = 0;
         for (int i = start; i < numbers.length; i++) {
-            arr[depth] = numbers[i];
-            dfs(depth + 1, i + 1);
+            if (prev != numbers[i]) {
+                arr[depth] = numbers[i];
+                prev = numbers[i];
+                dfs(depth + 1, i + 1);
+            }
         }
     }
 
@@ -39,11 +41,6 @@ public class Main {
         }
         Arrays.sort(numbers);
         dfs(0, 0);
-
-        List<String> distinctList = answer.stream().distinct().collect(Collectors.toList());
-        for (String s : distinctList) {
-            bw.write(s + "\n");
-        }
         bw.flush();
         bw.close();
         br.close();
