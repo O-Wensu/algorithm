@@ -18,6 +18,14 @@ public class Main {
         public int getScore() {
             return score;
         }
+
+        @Override
+        public String toString() {
+            return "Assignment{" +
+                    "deadline=" + deadline +
+                    ", score=" + score +
+                    '}';
+        }
     }
     static int result = 0;
     static List<Assignment> assignments = new ArrayList<>();
@@ -33,22 +41,25 @@ public class Main {
             assignments.add(new Assignment(deadLine, score));
         }
 
+        //점수 오름차순, 점수 같으면 마감일 내림차순
         Collections.sort(assignments, Comparator.comparing(Assignment::getScore).reversed().thenComparing(Assignment::getDeadline));
 
-        int[] days = new int[1001];
+
+        // 마감일에 근거하여 과제를 수행하기 위한 배열 생성
+        boolean[] days = new boolean[1001];
         result = 0;
 
         for (Assignment assignment : assignments) {
             int deadline = assignment.getDeadline();
 
             // 이미 수행된 과제가 있는지 확인
-            while (deadline > 0 && days[deadline] != 0) {
+            while (deadline > 0 && days[deadline]) {
                 deadline--;
             }
 
             // 과제를 수행할 수 있는 마감일이 있을 경우
             if (deadline > 0) {
-                days[deadline] = assignment.getScore();
+                days[deadline] = true;
                 result += assignment.getScore();
             }
         }
