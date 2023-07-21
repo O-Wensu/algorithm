@@ -34,17 +34,17 @@ public class Main {
             y = node.y;
             int isBroken = node.isBroken;
 
+            if (x == n - 1 && y == m - 1) {
+                System.out.println(node.count);
+                return;
+            }
+
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
 
                 if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
                 if (isVisited[nx][ny][isBroken]) continue;
-                if (nx == n - 1 && ny == m - 1) {
-                    isVisited[nx][ny][isBroken] = true;
-                    min = Math.min(min, node.count + 1);
-                    continue;
-                }
 
                 //지금껏 부순 벽이 없고 && 벽을 마주쳤다면 부수기
                 if (isBroken == 0 && map[nx][ny] == 1) {
@@ -58,11 +58,7 @@ public class Main {
                 }
             }
         }
-        if (!isVisited[n - 1][m - 1][0] && !isVisited[n - 1][m - 1][1]) {
-            System.out.println("-1");
-        } else {
-            System.out.println(min);
-        }
+        System.out.println(-1);
     }
 
     public static void main(String[] args) throws IOException {
