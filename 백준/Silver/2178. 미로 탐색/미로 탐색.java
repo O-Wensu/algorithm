@@ -37,11 +37,9 @@ public class Main {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
                 if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-                if (graph[nx][ny] == 0) continue;
-                if (graph[nx][ny] == 1) {
-                    graph[nx][ny] = graph[x][y] + 1;
-                    q.offer(new Node(nx, ny));
-                }
+                if (graph[nx][ny] != 1) continue;
+                graph[nx][ny] = graph[x][y] + 1;
+                q.offer(new Node(nx, ny));
             }
         }
         return graph[n-1][m-1];
