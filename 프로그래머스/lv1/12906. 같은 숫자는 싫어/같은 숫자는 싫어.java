@@ -2,13 +2,14 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
-        List<Integer> list = new ArrayList<>();
-        int prev = Integer.MIN_VALUE;
-        for (int i : arr) {
-            if (prev == i) continue;
-            list.add(i);
-            prev = i;
+        Stack<Integer> stack = new Stack<>();
+        for(int i : arr) {
+            if (stack.isEmpty()) stack.push(i);
+            else {
+                if (stack.peek() == i) continue;
+                stack.push(i);
+            }
         }
-        return list.stream().mapToInt(i -> i).toArray();
+        return stack.stream().mapToInt(i -> i).toArray();
     }
 }
