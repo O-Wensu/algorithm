@@ -21,7 +21,9 @@ class Solution {
         queue.offer(new Node(0,0));
         while(!queue.isEmpty()) {
             Node node = queue.poll();
-            if (node.x == row - 1 && node.y == col - 1) break;
+            if (node.x == row - 1 && node.y == col - 1) {
+                return maps[row - 1][col - 1];
+            }
             for (int i = 0; i < 4; i++) {
                 int nx = node.x + dx[i];
                 int ny = node.y + dy[i];
@@ -32,7 +34,6 @@ class Solution {
                 queue.offer(new Node(nx, ny));
             }
         }
-        if (maps[row - 1][col - 1] == 1) return -1;
-        return maps[row - 1][col - 1];
-    } 
+        return -1;
+    }
 }
