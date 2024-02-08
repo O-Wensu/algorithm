@@ -9,21 +9,10 @@ public class Main {
         int Q = sc.nextInt();
         int T = sc.nextInt();
 
-        int dx = 1;
-        int timeX = T % (2 * W);
-        while(timeX --> 0) {
-            if (P == W) dx = -1;
-            else if (P == 0) dx = 1;
-            P += dx;
-        }
-
-        int dy = 1;
-        int timeY = T % (2 * H);
-        while(timeY --> 0) {
-            if (Q == H) dy = -1;
-            else if (Q == 0) dy = 1;
-            Q += dy;
-        }
-        System.out.printf("%d %d", P, Q);
+        int currentX = (T + P) % (2 * W);
+        int currentY = (T + Q) % (2 * H);
+        if (currentX > W) currentX = 2 * W - currentX;
+        if (currentY > H) currentY = 2 * H - currentY;
+        System.out.printf("%d %d", currentX, currentY);
     }
 }
