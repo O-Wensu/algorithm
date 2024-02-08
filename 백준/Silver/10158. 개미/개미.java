@@ -1,13 +1,16 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int W = sc.nextInt();
-        int H = sc.nextInt();
-        int P = sc.nextInt();
-        int Q = sc.nextInt();
-        int T = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer tk = new StringTokenizer(br.readLine());
+        int W = Integer.parseInt(tk.nextToken());
+        int H = Integer.parseInt(tk.nextToken());
+        tk = new StringTokenizer(br.readLine());
+        int P = Integer.parseInt(tk.nextToken());
+        int Q = Integer.parseInt(tk.nextToken());
+        int T = Integer.parseInt(br.readLine());
 
         int currentX = (T + P) % (2 * W);
         int currentY = (T + Q) % (2 * H);
