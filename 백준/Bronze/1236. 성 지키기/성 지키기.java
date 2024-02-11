@@ -7,25 +7,27 @@ public class Main {
         StringTokenizer tk = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(tk.nextToken());
         int M = Integer.parseInt(tk.nextToken());
-        int emptyRow = 0;
-        int emptyCol = 0;
         char[][] map = new char[N][M];
-        for(int i = 0; i < N; i++) {
-            String row = br.readLine();
-            if (!row.contains("X")) {
-                emptyRow++;
-            }
-            map[i] = row.toCharArray();
+        for (int i = 0; i < N; i++) {
+            map[i] = br.readLine().toCharArray();
         }
-        for (int i = 0; i < M; i++) {
-            boolean isEmpty = true;
-            for (int j = 0; j < N; j++) {
-                if (map[j][i] == 'X') {
-                    isEmpty = false;
-                    break;
+        boolean[] existRow = new boolean[N];
+        boolean[] existCol = new boolean[M];
+        for(int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if(map[i][j] == 'X') {
+                    existRow[i] = true;
+                    existCol[j] = true;
                 }
             }
-            if (isEmpty) emptyCol++;
+        }
+        int emptyRow = N;
+        int emptyCol = M;
+        for (int i = 0; i< N; i++) {
+            if (existRow[i]) emptyRow--;
+        }
+        for (int i = 0; i< M; i++) {
+            if (existCol[i]) emptyCol--;
         }
         System.out.println(Math.max(emptyRow, emptyCol));
     }
