@@ -11,10 +11,9 @@ public class Main {
             cnt[Integer.parseInt(br.readLine())]++;
         }
         for (int i = 1; i < cnt.length; i++) {
-            while(cnt[i] --> 0) {
-                bw.write(i + "\n");
-            }
+            bw.write((i + "\n").repeat(cnt[i]));
         }
         bw.flush();
+        bw.close();
     }
 }
