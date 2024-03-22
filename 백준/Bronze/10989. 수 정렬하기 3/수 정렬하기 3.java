@@ -1,21 +1,20 @@
-import java.util.*;
 import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int n = Integer.parseInt(br.readLine());
-        int[] numbers = new int[n];
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        int[] cnt = new int[10001];
 
-        for (int i = 0; i < n; i++) {
-            numbers[i] = Integer.parseInt(br.readLine());
+        for (int i = 0; i < N; i++) {
+            cnt[Integer.parseInt(br.readLine())]++;
         }
-        Arrays.sort(numbers);
-
-        for (int number : numbers) {
-            sb.append(number).append("\n");
+        for (int i = 1; i < cnt.length; i++) {
+            while(cnt[i] --> 0) {
+                bw.write(i + "\n");
+            }
         }
-        System.out.println(sb);
-    };
+        bw.flush();
+    }
 }
