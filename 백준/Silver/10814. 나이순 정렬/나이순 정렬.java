@@ -1,5 +1,5 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     static class Member {
@@ -12,26 +12,31 @@ public class Main {
         }
 
         public int getAge() {
-            return age;
+            return this.age;
         }
 
-        public String getName() {
-            return name;
+        @Override
+        public String toString() {
+            return age + " " + name + "\n";
         }
     }
-    public static void main(String[] args) throws IOException{
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
         List<Member> members = new ArrayList<>();
-        int size = Integer.parseInt(br.readLine());
-        for (int i = 0; i < size; i++) {
+        for(int i = 0; i < N; i++) {
             StringTokenizer tk = new StringTokenizer(br.readLine());
-            members.add(new Member(Integer.parseInt(tk.nextToken()), tk.nextToken()));
+            int age = Integer.parseInt(tk.nextToken());
+            String name = tk.nextToken();
+            members.add(new Member(age, name));
         }
-        Collections.sort(members, Comparator.comparing(Member::getAge));
-        members.stream().forEach(member -> {
-            sb.append(member.getAge() + " " + member.getName() + "\n");
-        });
-        System.out.println(sb);
+        members.sort(Comparator.comparingInt(Member::getAge));
+        for(int i = 0; i < N; i++) {
+            bw.write(members.get(i).toString());
+        }
+        bw.flush();
+        bw.close();
     }
 }
