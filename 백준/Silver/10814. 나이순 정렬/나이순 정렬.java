@@ -2,17 +2,16 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static class Member {
+    static class Member implements Comparable<Member> {
         private int age;
         private String name;
-
         public Member(int age, String name) {
             this.age = age;
             this.name = name;
         }
-
-        public int getAge() {
-            return this.age;
+        @Override
+        public int compareTo(Member m) {
+            return this.age - m.age;
         }
 
         @Override
@@ -25,16 +24,16 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(br.readLine());
-        List<Member> members = new ArrayList<>();
+        Member[] members = new Member[N];
         for(int i = 0; i < N; i++) {
             StringTokenizer tk = new StringTokenizer(br.readLine());
             int age = Integer.parseInt(tk.nextToken());
             String name = tk.nextToken();
-            members.add(new Member(age, name));
+            members[i] = new Member(age, name);
         }
-        members.sort(Comparator.comparingInt(Member::getAge));
+        Arrays.sort(members);
         for(int i = 0; i < N; i++) {
-            bw.write(members.get(i).toString());
+            bw.write(members[i].toString());
         }
         bw.flush();
         bw.close();
