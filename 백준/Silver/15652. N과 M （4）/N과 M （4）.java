@@ -1,36 +1,37 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static int n, m;
-    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    public static int[] arr;
+    static StringBuilder sb = new StringBuilder();
+    static int N, M;
+    static int[] selected;
 
-    public static void dfs(int depth, int start) throws IOException {
-        if (depth == m) {
-            for (int i : arr) {
-                bw.write(i + " ");
+    static void input() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer tk = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(tk.nextToken());
+        M = Integer.parseInt(tk.nextToken());
+        selected = new int[M + 1];
+    }
+
+    static void rec_func(int k) {
+        if (k == M + 1) {
+            for (int i = 1; i <= M; i++) sb.append(selected[i]).append(' ');
+            sb.append('\n');
+        } else {
+            int start = selected[k - 1];
+            if (start == 0) start = 1;
+            for (int cand = start; cand <= N; cand++) {
+                selected[k] = cand;
+                rec_func(k + 1);
+                selected[k] = 0;
             }
-            bw.write("\n");
-            return;
-        }
-        for (int i = start; i <= n; i++) {
-            arr[depth] = i;
-            dfs(depth + 1, i);
         }
     }
 
-
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer tk = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(tk.nextToken());
-        m = Integer.parseInt(tk.nextToken());
-        arr = new int[m];
-
-        dfs(0, 1);
-        bw.flush();
-        bw.close();
-        br.close();
+        input();
+        rec_func(1);
+        System.out.println(sb.toString());
     }
 }
