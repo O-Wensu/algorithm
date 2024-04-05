@@ -1,5 +1,7 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 
@@ -22,20 +24,15 @@ public class Main {
         min = Integer.MAX_VALUE;
     }
 
-    static int calculator() {
-        int value = nums[1];
-        for (int i = 1; i <= N - 1; i++) {
-            if (order[i] == 1) value += nums[i + 1]; 
-            if (order[i] == 2) value -= nums[i + 1];
-            if (order[i] == 3) value *= nums[i + 1];
-            if (order[i] == 4) value /= nums[i + 1]; 
-        }
-        return value;
+    static int calculator(int operand1, int operator, int operand2) {
+        if (operator == 1) return operand1 += operand2; 
+        else if (operator == 2) return operand1 -= operand2; 
+        else if (operator == 3) return operand1 *= operand2;
+        else return operand1 /= operand2;
     }
 
-    static void rec_func(int k) {
+    static void rec_func(int k, int value) {
         if (k == N) { 
-            int value = calculator();
             max = Math.max(max, value);
             min = Math.min(min, value);
         } else {
@@ -43,7 +40,7 @@ public class Main {
                 if (operations[cand] >= 1) {
                     operations[cand]--;
                     order[k] = cand;
-                    rec_func(k + 1);
+                    rec_func(k + 1, calculator(value, cand, nums[k + 1]));
                     operations[cand]++;
                     order[k] = 0;
                 }
@@ -53,7 +50,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         input();
-        rec_func(1);
+        rec_func(1, nums[1]);
         sb.append(max).append('\n').append(min);
         System.out.println(sb.toString());
     }
