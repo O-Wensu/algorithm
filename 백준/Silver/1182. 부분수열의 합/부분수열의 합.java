@@ -1,31 +1,35 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    static int N, S, ans;
+    static int[] nums;
+
+    static void input() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tk = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(tk.nextToken());
-        int s = Integer.parseInt(tk.nextToken());
-        int[] arr = new int[n];
-        int count = 0;
-
-        //초기화
+        N = Integer.parseInt(tk.nextToken());
+        S = Integer.parseInt(tk.nextToken());
+        nums = new int[N + 1];
         tk = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(tk.nextToken());
+        for (int i = 1; i <= N; i++) {
+            nums[i] = Integer.parseInt(tk.nextToken());
         }
+    }
 
-        //00001 ~ 11111
-        for(int i = 1; i < (1 << n); i++) {
-            int sum = 0;
-            for (int j = 0; j < n; j++) {
-                if ((i & (1 << j)) != 0) {
-                    sum += arr[n - 1 - j];
-                }
-            }
-            if (sum == s) count++;
+    static void rec_func(int k, int value) {
+        if (k == N + 1) {
+            if (value == S) ans++;
+        } else {
+            rec_func(k + 1, value + nums[k]);
+            rec_func(k + 1, value);
         }
-        System.out.println(count);
+    }
+
+    public static void main(String[] args) throws IOException {
+        input();
+        rec_func(1, 0);
+        if (S == 0) ans--;
+        System.out.println(ans);
     }
 }
