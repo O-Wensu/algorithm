@@ -2,19 +2,29 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        StringTokenizer tk = new StringTokenizer(br.readLine());
-        Map<Integer, Integer> map = new HashMap<>();
-        int X = Integer.parseInt(br.readLine());
-        int count = 0;
+    static int N, X, ans;
+    static String nums;
+    static Map<Integer, Integer> hashMap = new HashMap<>();
 
-        for(int i = 0; i < N; i++) {
+    static void input() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        nums = br.readLine();
+        X = Integer.parseInt(br.readLine());
+    }
+
+    static void pro() {
+        StringTokenizer tk = new StringTokenizer(nums);
+        for (int i = 0; i < N; i++) {
             int n = Integer.parseInt(tk.nextToken());
-            if (map.containsKey(X - n)) count++;
-            map.put(n, 0);
+            if (hashMap.get(X - n) != null) ans++;
+            else hashMap.put(n, 1);
         }
-        System.out.println(count);
+    }
+
+    public static void main(String[] args) throws IOException {
+        input();
+        pro();
+        System.out.println(ans);
     }
 }
