@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Main {
     static StringBuilder sb = new StringBuilder();
-    static int R, C, liveOCnt = 0, liveVCnt = 0, OCnt, VCnt;
+    static int R, C, liveSheep, liveWolf, sheep, wolf;
     static int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     static String[] a;
     static boolean[][] visit;
@@ -22,8 +22,8 @@ public class Main {
 
     static void dfs(int x, int y) {
         visit[x][y] = true;
-        if (a[x].charAt(y) == 'o') OCnt++;
-        else if (a[x].charAt(y) == 'v') VCnt++;
+        if (a[x].charAt(y) == 'o') sheep++;
+        else if (a[x].charAt(y) == 'v') wolf++;
 
         for (int i = 0; i < dir.length; i++) {
             int nx = x + dir[i][0];
@@ -38,14 +38,14 @@ public class Main {
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
                 if (visit[i][j] || a[i].charAt(j) == '#') continue;
-                OCnt = 0;
-                VCnt = 0;
+                sheep = 0;
+                wolf = 0;
                 dfs(i, j);
-                if (OCnt > VCnt) liveOCnt += OCnt;
-                else liveVCnt += VCnt;
+                if (sheep > wolf) liveSheep += sheep;
+                else liveWolf += wolf;
             }
         }
-        sb.append(liveOCnt).append(' ').append(liveVCnt);
+        sb.append(liveSheep).append(' ').append(liveWolf);
     }
 
     public static void main(String[] args) throws IOException {
