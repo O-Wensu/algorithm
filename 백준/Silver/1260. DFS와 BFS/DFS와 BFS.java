@@ -1,10 +1,10 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     static StringBuilder sb = new StringBuilder();
     static int N, M, V;
-    static int[][] adj;
+    static ArrayList<Integer>[] adj;
     static boolean[] visit;
 
     static void input() throws IOException {
@@ -13,21 +13,27 @@ public class Main {
         N = Integer.parseInt(tk.nextToken());
         M = Integer.parseInt(tk.nextToken());
         V = Integer.parseInt(tk.nextToken());
-        adj = new int[N + 1][N + 1];
+        adj = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            adj[i] = new ArrayList<Integer>();
+        }
         for (int i = 1; i <= M; i++) {
             tk = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(tk.nextToken());
             int y = Integer.parseInt(tk.nextToken());
-            adj[x][y] = 1;
-            adj[y][x] = 1;
+            adj[x].add(y);
+            adj[y].add(x);
+        }
+        for (int i = 1; i <= N; i++) {
+            Collections.sort(adj[i]);
         }
     }
 
     static void dfs(int x) {
         visit[x] = true;
         sb.append(x).append(' ');
-        for (int y = 1; y <= N; y++) {
-            if (adj[x][y] == 0 || visit[y]) continue;
+        for (int y: adj[x]) {
+            if (visit[y]) continue;
             dfs(y);
         }
     }
@@ -37,11 +43,11 @@ public class Main {
         que.add(x);
         visit[x] = true;
 
-        while(!que.isEmpty()) {
+        while (!que.isEmpty()) {
             x = que.poll();
             sb.append(x).append(' ');
-            for (int y = 1; y <= N; y++) {
-                if (adj[x][y] == 0 || visit[y]) continue;
+            for (int y: adj[x]) {
+                if (visit[y]) continue;
                 que.add(y);
                 visit[y] = true;
             }
