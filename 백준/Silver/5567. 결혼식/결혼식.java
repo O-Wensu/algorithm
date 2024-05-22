@@ -22,7 +22,8 @@ public class Main {
         }
     }
 
-    static void bfs(int x) {
+    static int bfs(int x) {
+        int cnt = 0; // 초대 가능한 사람 수
         for (int i = 0; i <= N; i++) dist[i] = -1;
         Queue<Integer> Q = new LinkedList<>();
         Q.add(x);
@@ -30,22 +31,20 @@ public class Main {
 
         while(!Q.isEmpty()) {
             x = Q.poll();
+            if (1 <= dist[x] && dist[x] <= 2) cnt++;
+            if (dist[x] == 2) continue;
             for (int y : A[x]) {
                 if (dist[y] != -1) continue;
                 Q.add(y);
                 dist[y] = dist[x] + 1;
             }
         }
+        return cnt;
     }
 
     static void pro() {
         dist = new int[N + 1];
-        bfs(1);
-        int cnt = 1;
-        for (int i = 2; i <= N; i++) {
-            if (dist[i] == -1 || dist[i] > 2) cnt++;
-        }
-        System.out.println(N - cnt);
+        System.out.println(bfs(1));
     }
 
     public static void main(String[] args) throws IOException {
